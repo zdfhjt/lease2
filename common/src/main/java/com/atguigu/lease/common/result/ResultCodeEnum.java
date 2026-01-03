@@ -24,7 +24,8 @@ public enum ResultCodeEnum {
 
     ADMIN_APARTMENT_DELETE_ERROR(310,"请先删除房间"),
 
-
+    LEASE_AGREEMENT_EXIXT(701,"该房间已被出租"),
+    GET_LEASE_BY_ID_ERROR(702, "用户越权访问租约"),
     ADMIN_LOGIN_AUTH(305, "未登陆"),
     ADMIN_ACCOUNT_NOT_EXIST_ERROR(306, "账号不存在"),
     ADMIN_ACCOUNT_ERROR(307, "用户名或密码错误"),
@@ -42,6 +43,7 @@ public enum ResultCodeEnum {
 
     TOKEN_EXPIRED(601, "token过期"),
     TOKEN_INVALID(602, "token非法");
+
 
 
     private final Integer code;

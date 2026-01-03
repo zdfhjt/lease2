@@ -88,4 +88,11 @@
             </if>
         </where>
     </select>
+    <select id="findByApartmentIdAndRoomIdAndStatus"
+            resultType="com.atguigu.lease.model.entity.LeaseAgreement">
+        select id, phone, name, identification_number, apartment_id, room_id, lease_start_date, lease_end_date, lease_term_id, rent,
+               deposit, payment_type_id, status, source_type, additional_info,
+               create_time, update_time, is_deleted from lease.lease_agreement
+        where is_deleted=0 and apartment_id=#{apartmentId} and room_id=#{roomId} and status=#{status}
+    </select>
 </mapper>

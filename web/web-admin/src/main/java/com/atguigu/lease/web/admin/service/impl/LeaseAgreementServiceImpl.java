@@ -1,6 +1,7 @@
 package com.atguigu.lease.web.admin.service.impl;
 
 import com.atguigu.lease.model.entity.*;
+import com.atguigu.lease.model.enums.LeaseStatus;
 import com.atguigu.lease.web.admin.mapper.*;
 import com.atguigu.lease.web.admin.service.LeaseAgreementService;
 import com.atguigu.lease.web.admin.vo.agreement.AgreementQueryVo;
@@ -57,6 +58,11 @@ public class LeaseAgreementServiceImpl extends ServiceImpl<LeaseAgreementMapper,
     public IPage<AgreementVo> pageAgreementByQuery(IPage<AgreementVo> page, AgreementQueryVo queryVo) {
 
         return leaseAgreementMapper.pageAgreementByQuery(page, queryVo);
+    }
+
+    @Override
+    public LeaseAgreement findByApartmentIdAndRoomIdAndStatus(Long apartmentId, Long roomId, LeaseStatus leaseStatus) {
+        return leaseAgreementMapper.findByApartmentIdAndRoomIdAndStatus(apartmentId, roomId, leaseStatus);
     }
 }
 

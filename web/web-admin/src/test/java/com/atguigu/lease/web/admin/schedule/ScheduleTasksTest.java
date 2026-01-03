@@ -15,8 +15,5 @@ class ScheduleTasksTest {
     void test() {
         scheduleTasks.checkLeaseStatus();
 }
-@Test
-  void testToken() {
-      System.out.println(JwtUtil.createToken(1L, "31"));
-  }
+
 }

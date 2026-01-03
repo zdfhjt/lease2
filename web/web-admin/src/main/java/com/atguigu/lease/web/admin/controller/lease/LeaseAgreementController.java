@@ -1,7 +1,9 @@
 package com.atguigu.lease.web.admin.controller.lease;
 
 
+import com.atguigu.lease.common.exception.LeaseException;
 import com.atguigu.lease.common.result.Result;
+import com.atguigu.lease.common.result.ResultCodeEnum;
 import com.atguigu.lease.model.entity.LeaseAgreement;
 import com.atguigu.lease.model.enums.LeaseStatus;
 import com.atguigu.lease.web.admin.service.LeaseAgreementService;
@@ -27,6 +29,10 @@ public class LeaseAgreementController {
     @Operation(summary = "保存或修改租约信息")
     @PostMapping("saveOrUpdate")
     public Result saveOrUpdate(@RequestBody LeaseAgreement leaseAgreement) {
+        LeaseAgreement leaseAgreement1 = service.findByApartmentIdAndRoomIdAndStatus(leaseAgreement.getApartmentId(), leaseAgreement.getRoomId(),LeaseStatus.SIGNED);
+        if(leaseAgreement1 != null && (leaseAgreement.getStatus()==LeaseStatus.SIGNING||leaseAgreement.getStatus()==LeaseStatus.RENEWING)){
+            throw new LeaseException(ResultCodeEnum.LEASE_AGREEMENT_EXIXT);
+        }
         service.saveOrUpdate(leaseAgreement);
         return Result.ok();
     }

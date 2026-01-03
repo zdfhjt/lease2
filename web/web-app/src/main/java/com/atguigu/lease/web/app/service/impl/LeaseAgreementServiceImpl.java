@@ -1,8 +1,12 @@
 package com.atguigu.lease.web.app.service.impl;
 
 import com.atguigu.lease.common.exception.LeaseException;
+import com.atguigu.lease.common.login.LoginUser;
+import com.atguigu.lease.common.login.LoginUserHolder;
+import com.atguigu.lease.common.result.ResultCodeEnum;
 import com.atguigu.lease.model.entity.*;
 import com.atguigu.lease.model.enums.ItemType;
+import com.atguigu.lease.model.enums.LeaseStatus;
 import com.atguigu.lease.web.app.mapper.*;
 import com.atguigu.lease.web.app.service.ApartmentInfoService;
 import com.atguigu.lease.web.app.service.LeaseAgreementService;
@@ -38,6 +42,7 @@ public class LeaseAgreementServiceImpl extends ServiceImpl<LeaseAgreementMapper,
     @Autowired
     private PaymentTypeMapper paymentTypeMapper;
 
+
     @Override
     public List<AgreementItemVo> getAgreementItemVoList(String username) {
         return leaseAgreementMapper.getAgreementItemVoList(username);
@@ -46,7 +51,13 @@ public class LeaseAgreementServiceImpl extends ServiceImpl<LeaseAgreementMapper,
     @Override
     public AgreementDetailVo getAgreementDetailVoListByID(Long id) {
         LeaseAgreement leaseAgreement = leaseAgreementMapper.selectById(id);
-
+        String phone = leaseAgreement.getPhone();
+        LoginUser loginUser = LoginUserHolder.getLoginUser();
+        System.out.println(loginUser.getUsername()+"---dsddddddddddddddddddddddddddd");
+        System.out.println(phone+"---dsddddddddddddddddddddddddddd");
+        if(!phone .equalsIgnoreCase(loginUser.getUsername())){
+            throw new LeaseException(ResultCodeEnum.GET_LEASE_BY_ID_ERROR);
+        }
         if(leaseAgreement == null){
             return null;
         }
@@ -76,6 +87,12 @@ public class LeaseAgreementServiceImpl extends ServiceImpl<LeaseAgreementMapper,
         agreementDetailVo.setLeaseTermMonthCount(leaseTerm.getMonthCount());
         agreementDetailVo.setLeaseTermUnit(leaseTerm.getUnit());
         return agreementDetailVo;
+    }
+
+    @Override
+    public LeaseAgreement findByApartmentIdAndRoomIdAndStatus(Long apartmentId, Long roomId, LeaseStatus leaseStatus) {
+        LeaseAgreement leaseAgreement = leaseAgreementMapper.findByApartmentIdAndRoomIdAndStatus(apartmentId, roomId, leaseStatus);
+        return null;
     }
 }
 

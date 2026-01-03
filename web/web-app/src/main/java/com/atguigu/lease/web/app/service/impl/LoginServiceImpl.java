@@ -38,12 +38,12 @@ public class LoginServiceImpl implements LoginService {
         if(isExit){
             //获得剩余时间
             Long ttl = stringRedisTemplate.getExpire(key, TimeUnit.SECONDS);
-            if(RedisConstant.APP_LOGIN_CODE_TTL_SEC*10000-ttl<RedisConstant.APP_LOGIN_CODE_RESEND_TIME_SEC){
+            if(RedisConstant.APP_LOGIN_CODE_TTL_SEC*1000000-ttl<RedisConstant.APP_LOGIN_CODE_RESEND_TIME_SEC){
                 throw new LeaseException(ResultCodeEnum.APP_SEND_SMS_TOO_OFTEN);
             }
         }
         smsService.sendCode(phone,randomCode);
-        stringRedisTemplate.opsForValue().set(key,randomCode,RedisConstant.APP_LOGIN_CODE_TTL_SEC*10000, TimeUnit.SECONDS);
+        stringRedisTemplate.opsForValue().set(key,randomCode,RedisConstant.APP_LOGIN_CODE_TTL_SEC*1000000, TimeUnit.SECONDS);
 
     }
 

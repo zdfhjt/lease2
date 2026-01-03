@@ -1,7 +1,9 @@
 package com.atguigu.lease.web.app.controller.agreement;
 
+import com.atguigu.lease.common.exception.LeaseException;
 import com.atguigu.lease.common.login.LoginUserHolder;
 import com.atguigu.lease.common.result.Result;
+import com.atguigu.lease.common.result.ResultCodeEnum;
 import com.atguigu.lease.model.entity.LeaseAgreement;
 import com.atguigu.lease.model.enums.LeaseStatus;
 import com.atguigu.lease.web.app.service.LeaseAgreementService;
@@ -34,6 +36,7 @@ public class LeaseAgreementController {
     @GetMapping("getDetailById")
     public Result<AgreementDetailVo> getDetailById(@RequestParam Long id) {
         AgreementDetailVo agreementDetailVo= leaseAgreementService.getAgreementDetailVoListByID(id);
+
         return Result.ok(agreementDetailVo);
     }
 
@@ -50,6 +53,7 @@ public class LeaseAgreementController {
     @Operation(summary = "保存或更新租约", description = "用于续约")
     @PostMapping("saveOrUpdate")
     public Result saveOrUpdate(@RequestBody LeaseAgreement leaseAgreement) {
+
         leaseAgreementService.saveOrUpdate(leaseAgreement);
         return Result.ok();
     }
