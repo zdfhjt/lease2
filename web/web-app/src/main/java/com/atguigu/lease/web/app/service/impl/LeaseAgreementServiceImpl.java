@@ -53,8 +53,7 @@ public class LeaseAgreementServiceImpl extends ServiceImpl<LeaseAgreementMapper,
         LeaseAgreement leaseAgreement = leaseAgreementMapper.selectById(id);
         String phone = leaseAgreement.getPhone();
         LoginUser loginUser = LoginUserHolder.getLoginUser();
-        System.out.println(loginUser.getUsername()+"---dsddddddddddddddddddddddddddd");
-        System.out.println(phone+"---dsddddddddddddddddddddddddddd");
+
         if(!phone .equalsIgnoreCase(loginUser.getUsername())){
             throw new LeaseException(ResultCodeEnum.GET_LEASE_BY_ID_ERROR);
         }
